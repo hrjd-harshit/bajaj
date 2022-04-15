@@ -40,7 +40,7 @@ def post_request():
             "email": "harshitofficial12@gmail.com@",
             "roll_number": "0827CI191020"
             "numbers": json.dumps(_num_list),
-            "alphabets": json.dumps(_alpha_list)
+            "alphabets": _alpha_list
         }, 201
         """
     return {"is_success": False}
