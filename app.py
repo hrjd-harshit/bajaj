@@ -14,26 +14,18 @@ def get_countries():
 def post_request():
     if request.is_json:
         data = request.get_json()
+        temp = json.loads(json.dumps(_list))
         _list = data['data']
         _num_list = []
         _alpha_list = []
         success = True
-        for i in _list:
+        for i in temp:
             if str(i).isalnum():
                 if str(i).isdigit():
                     _num_list.append(int(i))
                 elif str(i).isalpha():
                     _alpha_list.append(i)
-        od  = OrderedDict({
-            "is_success": "true",
-            "user_id": "vaishnavi_munjewar_31032001",
-            "email": "vaishnavimunjewar03@gmail.com",
-            "roll_number": "0827CI191062",
-            "numbers": json.dumps(_num_list),
-            "alphabets": json.dumps(_alpha_list)
-        })
-        return  od
-        """
+        od  = OrderedDict(
             {
             "is_success": "true",
             "user_id": "harshit_jain_12072001",
@@ -41,8 +33,9 @@ def post_request():
             "roll_number": "0827CI191020"
             "numbers": json.dumps(_num_list),
             "alphabets": _alpha_list
-        }, 201
-        """
+        }, 201)
+        return  od
+        
     return {"is_success": False}
 
 
