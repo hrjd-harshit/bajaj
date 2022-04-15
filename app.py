@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from collections import OrderedDict
 import json
 
 app = Flask(__name__)
@@ -9,31 +10,40 @@ def get_countries():
     return {"message" : "Hello World"}
 
 
-@app.post("/")
+@app.post("/bhfl")
 def post_request():
     if request.is_json:
-        odd, even = [], []
         data = request.get_json()
-        _numbers = data['numbers']
+        _list = data['data']
         _num_list = []
+        _alpha_list = []
         success = True
-        for i in _numbers:
-            if str(i).isdigit() or i == ',' or i == '[' or i == ']':
+        for i in _list:
+            if str(i).isalnum():
                 if str(i).isdigit():
                     _num_list.append(int(i))
-            else:
-                success = False
-                break
-
-        if success is False:
-            return {"is_success": "false", "user_id": "john_doe_17091999"}
-        for i in _num_list:
-            if i % 2 == 0:
-                even.append(i)
-            else:
-                odd.append(i)
-        return {"is_success": "true", "user_id": "john_doe_17091999", "odd": json.dumps(odd), "even": json.dumps(even)}, 201
-    return {"error": "Request must be JSON"}, 415
+                elif str(i).isalpha():
+                    _alpha_list.append(i)
+        od  = OrderedDict({
+            "is_success": "true",
+            "user_id": "vaishnavi_munjewar_31032001",
+            "email": "vaishnavimunjewar03@gmail.com",
+            "roll_number": "0827CI191062",
+            "numbers": json.dumps(_num_list),
+            "alphabets": json.dumps(_alpha_list)
+        })
+        return  od
+        """
+            {
+            "is_success": "true",
+            "user_id": "harshit_jain_12072001",
+            "email": "harshitofficial12@gmail.com@",
+            "roll_number": "0827CI191020"
+            "numbers": json.dumps(_num_list),
+            "alphabets": json.dumps(_alpha_list)
+        }, 201
+        """
+    return {"is_success": False}
 
 
 if __name__ == '__main__':
